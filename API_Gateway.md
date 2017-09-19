@@ -18,6 +18,39 @@ theme: Next
 5. Authentication and authorization
 6. Lambda the orchestrator
 
+^ 1. 雲端服務改變了 infra 和軟體開發的遊戲規則。
+本章介紹了 serverless 和傳統架構的比較，並非都沒有缺點，
+並且提了一些原則：use compute service
+function 應該要是單一目的 且 stateless
+event-driven
+powerful frontend
+善用 3rd party 不重造輪
+2. 介紹 use case、架構、pattern 的範例，在真的開始做產品前可以多參考現實的已知範例。
+Compute as backend 的目標是不需要把所有事情都藏在後端，前端在考慮到安全性之下也可以直接跟 service db 溝通。
+compute as glue 在講 pipeline workflow，大隊接力。
+使用 SQS SNS 做 message pattern 或 fan-out pattern
+(實際成功案例的經驗十分值得參考)
+3. 開始進入 aws console。提到 IAM、S3、Elastic Transcoder、Lambda、SNS & multiple subscriber
+4. AWS securite、log、alert、billing (成本控管)。
+IAM 有 group, role, policy, permission
+用 cloudWatch 看 log，S3 也可以自動記 log
+成本預估、監控
+5. 認證和授權
+JWK
+Auth0
+delegation token
+24Hour Video website 登入功能 with bootstrap
+API Gateway -> Lambda -> get user info
+custom authorizer
+6. Lambda啟動和運行的模式：event(aws)、request(api gateway、console、cli)
+event-base -> push & pull
+Async waterfall
+Series and parallel
+SES 發信
+版本、別名、環境變數
+cli
+testing
+
 ---
 
 ## This chapter covers
@@ -46,7 +79,7 @@ theme: Next
 ---
 
 ^ 先看本章最後實作出的結果，傳統方式要做出這樣的功能如何達成
-帶出這個功能有什麼重點，要如何在 AWS 上實作
+^ 帶出這個功能有什麼重點，要如何在 AWS 上實作
 
 ## 有什麼重點
 
@@ -56,7 +89,7 @@ theme: Next
 
 ---
 
-## RESTful style endpoint
+## RESTful styel endpoint
 
 ---
 
@@ -67,12 +100,6 @@ Proxy integration V.S. manual mapping
 
 ---
 
-## API Gateway as the interface
-
-Figure 7.1
-
----
-
 ## Integration with AWS services
 
 1. Lambda function
@@ -80,9 +107,9 @@ Figure 7.1
 3. AWS Service Proxy
 4. Mock Intergration
 
-^ 2. 可在 request forward 到 endpoint 之前加料
-3. 把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
-4. 不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
+^ 可在 request forward 到 endpoint 之前加料
+把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
+不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
 
 ---
 
@@ -95,77 +122,89 @@ Figure 7.1
 5. Versioning
 6. Scripting
 
-^ 1. 減少 latency 等待時間 以及 分擔後端 loading
-^ 2. 可限制後端每秒被呼叫的次數
-^ 3. 可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
-^ 4. 建立環境別，例如 development、testing、production，每個 API 可以有十個環境別、每個帳號可以有 60 個 API，根據 stage variable 可以設定不同的環境去呼叫不同的 lambda 或 http endpoint
-^ 5. 每次佈署 API 都會產生一個新的 version，並且可以設定不同 stage 對應到不同 version 的 API
-^ 6. 使用 Swagger to scripting API (export/import)
+^ 還在想
 
 ---
 
 ## Caching
 
-Figure 7.14
+- 減少 latency 等待時間
+- 分擔後端 loading
 
-可以設定 0.5 GB ~ 237 GB
-每小時計費，0.5 GB $0.020 / hour，237GB $3.800 / hour
-可以設定 TTL (time-to-live) 秒
+![](./images/7-14.jpg)
+
+- 可以設定 0.5 GB ~ 237 GB (每小時計費，0.5 GB: \$0.020 / hour，237GB: \$3.800 / hour)
+- 可以設定 TTL (time-to-live) 秒
 
 ---
 
-## Throttling
+## Throttling (節流)
 
-Figure 7.11
+- 可限制後端每秒被呼叫的次數
+- 可預防阻斷式攻擊 (denial-of-service attacks)
 
-可以設定 rate and burst limit
-rate: API Gateway 允許一個 method 每秒被呼叫的平均次數
-burst limit: API Gateway 允許一個 method 被呼叫的最大次數
-default: 一個 AWS 帳戶可以設定 API Gateway 的 steady-state request rate to 1000 requests per second (rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods
+![](./images/7-11.jpg)
 
-^ 書: API Gateway sets the “steady-state request rate to 1000 requests per second
+- 可以設定 rate and burst limit
+- rate: API Gateway 允許一個 method 每秒被呼叫的平均次數
+- burst limit: API Gateway 允許一個 method 被呼叫的最大次數
 
-(rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods within an
-AWS account，想要增加 default 值可以跟 AWS 要
+^ 書: 一個 AWS 帳戶可以設定 API Gateway 的 steady-state request rate to 1000 requests per second
+(rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods，想要增加 default 值可以跟 AWS 要
 
-^ 官網: By default, API Gateway limits the steady-state request rate to 10,000 requests per second (rps). It limits the burst (that is, the maximum bucket size) to 5,000 requests across all APIs within an AWS account. In API Gateway, the burst limit corresponds to the maximum number of concurrent request submissions that API Gateway can fulfill at any moment without returning 429 Too Many Requests error responses.
+^ 官網: By default, API Gateway limits the steady-state request rate to 10,000 requests per second (rps). It limits the burst (that is, the maximum bucket size) to 5,000 requests across all APIs within an AWS account.
 
 ---
 
 ## Logging
 
-Figure 7.13
+- 可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
 
-API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
-需要設定 IAM 權限
+![](./images/7-13.jpg)
 
-^ log: error and info, metrics: API calls, latency, and errors
+- API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
+
+^ 設置剛提到的那兩項還需要設定 IAM 權限
+
+^ log levels: error and info, metrics: API calls, latency, and errors
 
 ---
 
 ## Staging
 
-每個 API 可以有十個環境別、每個帳號可以有 60 個 API
-可設定 stage variable，就是環境變數
+- 建立環境別，例如 development、UAT、production
+- 每個 API 可以有十個環境別、每個帳號可以有 60 個 API
+- API 可同時佈署不同的環境別，各自有自己的 URL
+- 可以設定 stage variable，就像環境變數
+- 設定好以後這樣用 `${stageVariables.<variable_name>}`
 
-^ 用來 mapping templates, 傳給 Lambda functions, HTTP... 等等
+^ API gateway 根據不同環境設定的 stage variable 去呼叫不同的 lambda function 或 http endpoint
 
-${stageVariables.<variable_name>}
-
-Figure 7.18
-Figure 7.19
-Figure 7.20
+![](./images/7-18.jpg)
+![](./images/7-19.jpg)
+![](./images/7-20.jpg)
 
 ---
 
 ## Versioning
 
-Figure 7.21
+- 每次佈署 API 都會產生一個新的 version
+- 可以設定不同 stage 對應到不同 version 的 API
+
+![](./images/7-21.jpg)
 
 ^ 透過 Stage Editor 裡的 Deployment History tab 來 rollback
 
 ---
 
 ## Scripting
+
+- 使用 Swagger to script API (export / import)
+
+- 官網: https://swagger.io/
+
+- 官網教學: https://swagger.io/getting-started-with-the-amazon-swagger-importer/
+
+^ 使用 Swagger 把 API 變成 script，除了更容易佈署，還可以產生文件
 
 ---
