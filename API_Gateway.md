@@ -1,7 +1,6 @@
 autoscale: true
 build-lists: true
 slidenumbers: true
-footer: Senao RD3
 theme: Next
 
 # Serverless Architectures on AWS
@@ -9,47 +8,131 @@ theme: Next
 
 ---
 
-## Previously
+### Previously
+## Ch1. Going serverless
 
-1. Going serverless
-2. Architechures and patterns
-3. Building a serverless application
-4. Setting up your cloud
-5. Authentication and authorization
-6. Lambda the orchestrator
+Principles :
+- use compute service
+- function 單一職責、stateless
+- event-driven
+- powerful frontend
+- 3rd party
 
-^ 1. 雲端服務改變了 infra 和軟體開發的遊戲規則。
+^ 雲端服務改變了 infra 和軟體開發的遊戲規則。
 本章介紹了 serverless 和傳統架構的比較，並非都沒有缺點，
-並且提了一些原則：use compute service
-function 應該要是單一目的 且 stateless
-event-driven
-powerful frontend
-善用 3rd party 不重造輪
-2. 介紹 use case、架構、pattern 的範例，在真的開始做產品前可以多參考現實的已知範例。
+
+---
+
+### Previously
+## Ch2. Architechures and patterns
+
+- Use cases
+- Architectures
+    - Compute as back end
+    - Compute as glue
+- Patterns
+    - Messaging pattern
+    - Fan-out pattern
+
+^ 介紹 use case、架構、pattern 的範例，在真的開始做產品前可以多參考現實的已知範例。
 Compute as backend 的目標是不需要把所有事情都藏在後端，前端在考慮到安全性之下也可以直接跟 service db 溝通。
 compute as glue 在講 pipeline workflow，大隊接力。
 使用 SQS SNS 做 message pattern 或 fan-out pattern
 (實際成功案例的經驗十分值得參考)
-3. 開始進入 aws console。提到 IAM、S3、Elastic Transcoder、Lambda、SNS & multiple subscriber
-4. AWS securite、log、alert、billing (成本控管)。
+
+---
+
+### Previously
+## Ch3. Building a serverless application
+
+- IAM
+- S3
+- Elastic Transcoder
+- Lambda
+- SNS & multiple subscriber
+
+^ 上傳影片、轉檔、轉成功發通知信、順便產生影片meta
+
+---
+
+### Previously
+## Ch4. Setting up your cloud
+
+- Security
+- Log
+- Alert
+- Billing
+
+^4. billing 成本控管
 IAM 有 group, role, policy, permission
 用 cloudWatch 看 log，S3 也可以自動記 log
 成本預估、監控
-5. 認證和授權
-JWK
-Auth0
-delegation token
-24Hour Video website 登入功能 with bootstrap
+
+---
+
+### Previously
+## Ch5. Authentication and authorization
+
+- JWK
+- Auth0
+- **24Hour Video** website
+- Delegation token
+- Custom authorizer
+
+^ 5. 認證和授權
 API Gateway -> Lambda -> get user info
-custom authorizer
-6. Lambda啟動和運行的模式：event(aws)、request(api gateway、console、cli)
-event-base -> push & pull
-Async waterfall
-Series and parallel
-SES 發信
-版本、別名、環境變數
-cli
-testing
+
+---
+
+<!-- [.autoscale: false] -->
+
+### Previously
+## Ch6. Lambda the orchestrator
+
+啟動模式：
+
+- Event ( push & pull )
+- Request
+
+^ Event (aws)
+Request (api gateway、console、cli)
+
+---
+
+### Previously
+## Ch6. Lambda the orchestrator
+
+運行模式 :
+
+- Waterfall
+- Series
+- Parallel
+
+^ npm Async
+
+---
+
+### Previously
+## Ch6. Lambda the orchestrator
+
+Lambda 設定 :
+
+- Version
+- Alias
+- Environment variable
+
+^ Alias => Dev, Stg, Prod
+
+---
+
+### Previously
+## Ch6. Lambda the orchestrator
+
+- AWS CLI
+- Local testing
+
+^ npm : Mocha、Chai、Sinon、Rewire
+for Testing、TDD、Mock
 
 ---
 
@@ -79,7 +162,7 @@ testing
 ---
 
 ^ 先看本章最後實作出的結果，傳統方式要做出這樣的功能如何達成
-^ 帶出這個功能有什麼重點，要如何在 AWS 上實作
+帶出這個功能有什麼重點，要如何在 AWS 上實作
 
 ## 有什麼重點
 
