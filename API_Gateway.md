@@ -46,7 +46,7 @@ theme: Next
 ---
 
 ^ 先看本章最後實作出的結果，傳統方式要做出這樣的功能如何達成
-^ 帶出這個功能有什麼重點，要如何在 AWS 上實作
+帶出這個功能有什麼重點，要如何在 AWS 上實作
 
 ## 有什麼重點
 
@@ -63,8 +63,7 @@ theme: Next
 ## Resources & Method
 
 ^ Proxy resource & CORS
-
-^ Proxy integration V.S. manual mapping
+Proxy integration V.S. manual mapping
 
 ---
 
@@ -78,44 +77,30 @@ Figure 7.1
 
 1. Lambda function
 2. HTTP Proxy
-
-^ 可在 request forward 到 endpoint 之前加料
-
 3. AWS Service Proxy
-
-^ 把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
-
 4. Mock Intergration
 
-^ 不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
+^ 2. 可在 request forward 到 endpoint 之前加料
+3. 把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
+4. 不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
 
 ---
 
 ## Features of the API Gateway
 
 1. Caching
-
-^ 減少 latency 等待時間 以及 分擔後端 loading
-
 2. Throttling (節流)
-
-^ 可限制後端每秒被呼叫的次數
-
 3. Logging
-
-^  可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
-
 4. Staging (環境別)
-
-^ 建立環境別，例如 development、testing、production，每個 API 可以有十個環境別、每個帳號可以有 60 個 API，根據 stage variable 可以設定不同的環境去呼叫不同的 lambda 或 http endpoint
-
 5. Versioning
-
-^ 每次佈署 API 都會產生一個新的 version，並且可以設定不同 stage 對應到不同 version 的 API
-
 6. Scripting
 
-^ 使用 Swagger to scripting API (export/import)
+^ 1. 減少 latency 等待時間 以及 分擔後端 loading
+^ 2. 可限制後端每秒被呼叫的次數
+^ 3. 可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
+^ 4. 建立環境別，例如 development、testing、production，每個 API 可以有十個環境別、每個帳號可以有 60 個 API，根據 stage variable 可以設定不同的環境去呼叫不同的 lambda 或 http endpoint
+^ 5. 每次佈署 API 都會產生一個新的 version，並且可以設定不同 stage 對應到不同 version 的 API
+^ 6. 使用 Swagger to scripting API (export/import)
 
 ---
 
