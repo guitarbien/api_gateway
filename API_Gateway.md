@@ -56,7 +56,7 @@ theme: Next
 
 ---
 
-## RESTful styel endpoint
+## RESTful style endpoint
 
 ---
 
@@ -82,26 +82,40 @@ Figure 7.1
 ^ 可在 request forward 到 endpoint 之前加料
 
 3. AWS Service Proxy
-  ^ 把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
+
+^ 把 request 直接 forward 到 aws services，http method 可以直接對應到 service 的行為，例如在 DynamoDB 新增資料
+
 4. Mock Intergration
-  ^ 不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
+
+^ 不必再串接其他服務，讓 API Gateway 直接回傳定義好的 response
 
 ---
 
 ## Features of the API Gateway
 
 1. Caching
-  ^ 減少 latency 等待時間 以及 分擔後端 loading
+
+^ 減少 latency 等待時間 以及 分擔後端 loading
+
 2. Throttling (節流)
-  ^ 可限制後端每秒被呼叫的次數
+
+^ 可限制後端每秒被呼叫的次數
+
 3. Logging
-  ^  可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
+
+^  可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
+
 4. Staging (環境別)
-  ^ 建立環境別，例如 development、testing、production，每個 API 可以有十個環境別、每個帳號可以有 60 個 API，根據 stage variable 可以設定不同的環境去呼叫不同的 lambda 或 http endpoint
+
+^ 建立環境別，例如 development、testing、production，每個 API 可以有十個環境別、每個帳號可以有 60 個 API，根據 stage variable 可以設定不同的環境去呼叫不同的 lambda 或 http endpoint
+
 5. Versioning
-  ^ 每次佈署 API 都會產生一個新的 version，並且可以設定不同 stage 對應到不同 version 的 API
+
+^ 每次佈署 API 都會產生一個新的 version，並且可以設定不同 stage 對應到不同 version 的 API
+
 6. Scripting
-  ^ 使用 Swagger to scripting API (export/import)
+
+^ 使用 Swagger to scripting API (export/import)
 
 ---
 
@@ -125,6 +139,7 @@ burst limit: API Gateway 允許一個 method 被呼叫的最大次數
 default: 一個 AWS 帳戶可以設定 API Gateway 的 steady-state request rate to 1000 requests per second (rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods
 
 ^ 書: API Gateway sets the “steady-state request rate to 1000 requests per second
+
 (rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods within an
 AWS account，想要增加 default 值可以跟 AWS 要
 
@@ -147,7 +162,9 @@ API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
 
 每個 API 可以有十個環境別、每個帳號可以有 60 個 API
 可設定 stage variable，就是環境變數
+
 ^ 用來 mapping templates, 傳給 Lambda functions, HTTP... 等等
+
 ${stageVariables.<variable_name>}
 
 Figure 7.18
