@@ -214,10 +214,12 @@ Proxy integration V.S. manual mapping
 - 減少 latency 等待時間
 - 分擔後端 loading
 
-![](./images/7-14.jpg)
+---
 
-- 可以設定 0.5 GB ~ 237 GB (每小時計費，0.5 GB: \$0.020 / hour，237GB: \$3.800 / hour)
-- 可以設定 TTL (time-to-live) 秒
+![fit](./images/7-14.jpg)
+
+^ 可以設定 0.5 GB ~ 237 GB (每小時計費，0.5 GB: \$0.020 / hour，237GB: \$3.800 / hour)
+^ 可以設定 TTL (time-to-live) 秒
 
 ---
 
@@ -226,11 +228,13 @@ Proxy integration V.S. manual mapping
 - 可限制後端每秒被呼叫的次數
 - 可預防阻斷式攻擊 (denial-of-service attacks)
 
-![](./images/7-11.jpg)
+---
 
-- 可以設定 rate and burst limit
-- rate: API Gateway 允許一個 method 每秒被呼叫的平均次數
-- burst limit: API Gateway 允許一個 method 被呼叫的最大次數
+![fit](./images/7-11.jpg)
+
+^ 可以設定 rate and burst limit
+^ rate: API Gateway 允許一個 method 每秒被呼叫的平均次數
+^ burst limit: API Gateway 允許一個 method 被呼叫的最大次數
 
 ^ 書: 一個 AWS 帳戶可以設定 API Gateway 的 steady-state request rate to 1000 requests per second
 (rps) and allows bursts of up to 2000 rps across all APIs, stages, and methods，想要增加 default 值可以跟 AWS 要
@@ -243,9 +247,11 @@ Proxy integration V.S. manual mapping
 
 - 可以使用 CloudWatch 紀錄 request and response，如 cache hits & misses
 
-![](./images/7-13.jpg)
+---
 
-- API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
+![fit](./images/7-13.jpg)
+
+#### API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
 
 ^ 設置剛提到的那兩項還需要設定 IAM 權限
 
@@ -263,9 +269,13 @@ Proxy integration V.S. manual mapping
 
 ^ API gateway 根據不同環境設定的 stage variable 去呼叫不同的 lambda function 或 http endpoint
 
-![](./images/7-18.jpg)
-![](./images/7-19.jpg)
-![](./images/7-20.jpg)
+---
+
+![fit](./images/7-18.jpg)
+
+---
+
+![fit](./images/7-19.jpg)
 
 ---
 
@@ -274,7 +284,9 @@ Proxy integration V.S. manual mapping
 - 每次佈署 API 都會產生一個新的 version
 - 可以設定不同 stage 對應到不同 version 的 API
 
-![](./images/7-21.jpg)
+---
+
+![fit](./images/7-21.jpg)
 
 ^ 透過 Stage Editor 裡的 Deployment History tab 來 rollback
 
@@ -284,7 +296,7 @@ Proxy integration V.S. manual mapping
 
 - 使用 Swagger to script API (export / import)
 
-- 官網: https://swagger.io/
+- 官網: [swagger.io](https://app.swaggerhub.com/apis/guitarbien6/ooxx/1.0.0)
 
 - 官網教學: https://swagger.io/getting-started-with-the-amazon-swagger-importer/
 
