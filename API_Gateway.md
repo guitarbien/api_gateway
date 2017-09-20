@@ -6,19 +6,23 @@ theme: Next
 # Serverless Architectures on AWS
 ## Chapter 7 API Gateway
 
+^ 自我介紹，說明今天分享的流程
+
 ---
 
 ### Previously
 ## Ch1. Going serverless
 
 Principles :
-- use compute service
-- function 單一職責、stateless
-- event-driven
-- powerful frontend
-- 3rd party
 
-^ 雲端服務改變了 infra 和軟體開發的遊戲規則。
+- Use compute service
+- Write single-purpose stateless functions
+- Event-driven
+- More powerful frontend
+- Embrace 3rd party services
+
+^
+雲端服務的興起對 IT 基礎建設和軟體開發有很大的衝擊。
 本章介紹了 serverless 和傳統架構的比較，並非都沒有缺點，
 
 ---
@@ -34,9 +38,14 @@ Principles :
     - Messaging pattern
     - Fan-out pattern
 
-^ 介紹 use case、架構、pattern 的範例，在真的開始做產品前可以多參考現實的已知範例。
-Compute as backend 的目標是不需要把所有事情都藏在後端，前端在考慮到安全性之下也可以直接跟 service db 溝通。
+^
+介紹 use case、
+架構、
+pattern，
+compute as backend => 使用 serverless 的 Lambda/function 和 3rd 做後端開發
+Compute as backend 的目標之一是不需要把所有事情都藏在後端，前端在考慮到安全性之下也可以直接跟 service db 溝通。
 compute as glue 在講 pipeline workflow，大隊接力。
+在真的開始做產品前可以多參考現實的已知範例。
 使用 SQS SNS 做 message pattern 或 fan-out pattern
 (實際成功案例的經驗十分值得參考)
 
@@ -51,7 +60,12 @@ compute as glue 在講 pipeline workflow，大隊接力。
 - Lambda
 - SNS & multiple subscriber
 
-^ 上傳影片、轉檔、轉成功發通知信、順便產生影片meta
+^
+正式進入 AWS console
+24Hour Video
+(先講 list 再講 24h 應用)
+上傳影片、轉檔、轉成功發通知信、產生影片 meta data、將影片設定為 public read
+
 
 ---
 
@@ -63,24 +77,26 @@ compute as glue 在講 pipeline workflow，大隊接力。
 - Alert
 - Billing
 
-^4. billing 成本控管
+^
 IAM 有 group, role, policy, permission
 用 cloudWatch 看 log，S3 也可以自動記 log
-成本預估、監控
+billing 成本控管成本預估、監控
 
 ---
 
 ### Previously
 ## Ch5. Authentication and authorization
 
-- JWK
+- JWT
 - Auth0
 - **24Hour Video** website
 - Delegation token
 - Custom authorizer
 
-^ 5. 認證和授權
-API Gateway -> Lambda -> get user info
+^
+認證和授權
+會員才可以享用 24Hour Video 的功能
+Login -> API Gateway -> Lambda -> get-user-info
 
 ---
 
@@ -142,41 +158,45 @@ for Testing、TDD、Mock
 - Lambda Proxy integration
 - API Gateway caching, throttling, and logging
 
+^
+Resource & Method 後面會補充
+以最簡單的方式串接 API Gateway 和 Lambda
+
 ---
 
-## 回顧之前的實作
+## 回顧到目前的實作
 
-1. Uploading to S3
+1. (Uploading to S3)
 2. Elastic Transcoder, output to another S3
 3. Send notification
 4. Generate meta data
 5. Set permission
-6. auth0
+6. Auth0
+7. Get video list
 
 ---
 
-## Simple Demo
+## Demo
 
-^ 此功能沒有照書本完全實作
+^
+目前省略了書中
+使用 SES 發送 email
+測試 API Gateway 存取限制是否有效
+get-video-list
+Auth0 JWT
+user-profile
+
+---
+​
+​![fit](./images/get-video-list.png)
 
 ---
 
-^ 先看本章最後實作出的結果，傳統方式要做出這樣的功能如何達成
-帶出這個功能有什麼重點，要如何在 AWS 上實作
-
-## 有什麼重點
-
-- auth
-- endpoint
-- get the video
+​![fit](./images/auth0-login.png)
 
 ---
 
-## RESTful styel endpoint
-
----
-
-## Resources & Method
+​![fit](./images/get-user-profile.png)
 
 ^ Proxy resource & CORS
 Proxy integration V.S. manual mapping
@@ -262,7 +282,7 @@ Proxy integration V.S. manual mapping
 ## Staging
 
 - 建立環境別，例如 development、UAT、production
-- 每個 API 可以有十個環境別、每個帳號可以有 60 個 API
+- 每個 API 可以有 10 個環境別、每個帳號可以有 60 個 API
 - API 可同時佈署不同的環境別，各自有自己的 URL
 - 可以設定 stage variable，就像環境變數
 - 設定好以後這樣用 `${stageVariables.<variable_name>}`
