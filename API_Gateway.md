@@ -251,7 +251,7 @@ Proxy integration V.S. manual mapping
 
 ![fit](./images/7-13.jpg)
 
-#### API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
+^ API Gateway 建議都設置 CloudWatch Logs and CloudWatch Metrics
 
 ^ 設置剛提到的那兩項還需要設定 IAM 權限
 
