@@ -10,6 +10,8 @@ theme: Next
 
 ---
 
+[.build-lists: false]
+
 ### Previously
 ## Ch1. Going serverless
 
@@ -25,6 +27,8 @@ Principles :
 本章介紹了 serverless 和傳統架構的比較，並非都沒有缺點，
 
 ---
+
+[.build-lists: false]
 
 ### Previously
 ## Ch2. Architechures and patterns
@@ -52,6 +56,8 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 
 ---
 
+[.build-lists: false]
+
 ### Previously
 ## Ch3. Building a serverless application
 
@@ -71,6 +77,8 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 
 ---
 
+[.build-lists: false]
+
 ### Previously
 ## Ch4. Setting up your cloud
 
@@ -86,6 +94,8 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 ^ billing 成本控管成本預估、監控
 
 ---
+
+[.build-lists: false]
 
 ### Previously
 ## Ch5. Authentication and authorization
@@ -104,7 +114,7 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 
 ---
 
-<!-- [.autoscale: false] -->
+[.build-lists: false]
 
 ### Previously
 ## Ch6. Lambda the orchestrator
@@ -120,6 +130,8 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 
 ---
 
+[.build-lists: false]
+
 ### Previously
 ## Ch6. Lambda the orchestrator
 
@@ -133,6 +145,8 @@ Compute as backend 的目標之一是不需要把所有事情都藏在後端，�
 
 ---
 
+[.build-lists: false]
+
 ### Previously
 ## Ch6. Lambda the orchestrator
 
@@ -145,6 +159,8 @@ Lambda 設定 :
 ^ Alias => Dev, Stg, Prod
 
 ---
+
+[.build-lists: false]
 
 ### Previously
 ## Ch6. Lambda the orchestrator
